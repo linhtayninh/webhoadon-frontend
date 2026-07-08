@@ -83,7 +83,7 @@ export default function UserManager() {
             <input type="password" value={formData.password} onChange={e => setFormData({...formData, password: e.target.value})} required={!editingId} />
           </div>
           <div className="input-group">
-            <label>Tên hộ kinh doanh</label>
+            <label>Tên Cá nhân/Hộ kinh doanh</label>
             <input type="text" value={formData.businessName} onChange={e => setFormData({...formData, businessName: e.target.value})} />
           </div>
           <div className="input-group">

@@ -73,7 +73,7 @@ export default function Auth() {
           {!isLogin && (
             <>
               <div className="input-group">
-                <label>Tên hộ kinh doanh</label>
+                <label>Tên Cá nhân/Hộ kinh doanh</label>
                 <input type="text" name="businessName" required onChange={handleChange} />
               </div>
               <div className="input-group">
