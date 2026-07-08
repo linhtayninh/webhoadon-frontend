@@ -5,8 +5,8 @@ import './index.css'
 
 import { GoogleOAuthProvider } from '@react-oauth/google';
 
-// Lấy từ file .env hoặc để tạm chuỗi rỗng nếu chưa có
-const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID || 'BẠN-CẦN-ĐIỀN-CLIENT-ID-VÀO-ĐÂY';
+// Đã chèn cứng Google Client ID
+const clientId = '831813172331-kba74cu26krjd7f9kkheb0isreprkh9m.apps.googleusercontent.com';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
