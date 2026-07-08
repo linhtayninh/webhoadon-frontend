@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { GoogleLogin } from '@react-oauth/google';
 import api from '../services/api';
 import { LogIn, UserPlus } from 'lucide-react';
 
@@ -9,6 +10,22 @@ export default function Auth() {
     email: '', password: '', taxCode: '', businessName: '', address: '', businessLocation: '', businessType: ''
   });
   const navigate = useNavigate();
+
+  const handleGoogleSuccess = async (credentialResponse) => {
+    try {
+      const res = await api.post('/auth/google', { credential: credentialResponse.credential });
+      localStorage.setItem('token', res.data.token);
+      localStorage.setItem('user', JSON.stringify(res.data.user));
+      window.location.href = '/';
+    } catch (error) {
+      alert('Lỗi đăng nhập Google');
+    }
+  };
+
+  const handleGoogleError = () => {
+    console.log('Google Login Failed');
+    alert('Đăng nhập Google thất bại');
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -88,6 +105,16 @@ export default function Auth() {
             {isLogin ? <><LogIn size={18} style={{ marginRight: '8px' }} /> Đăng Nhập</> : <><UserPlus size={18} style={{ marginRight: '8px' }} /> Đăng Ký</>}
           </button>
         </form>
+
+        <div className="mt-4" style={{ display: 'flex', justifyContent: 'center' }}>
+          <GoogleLogin
+            onSuccess={handleGoogleSuccess}
+            onError={handleGoogleError}
+            theme="outline"
+            size="large"
+            width="100%"
+          />
+        </div>
 
         <div className="text-center mt-4">
           <button className="btn btn-secondary" onClick={() => setIsLogin(!isLogin)}>

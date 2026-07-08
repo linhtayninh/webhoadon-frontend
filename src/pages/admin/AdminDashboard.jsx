@@ -26,14 +26,8 @@ export default function AdminDashboard() {
 
   const handleBackup = async () => {
     try {
-      const token = localStorage.getItem('token');
-      const response = await fetch('http://localhost:3000/api/admin/backup', {
-        headers: { 'Authorization': `Bearer ${token}` }
-      });
-      if (!response.ok) throw new Error('Lỗi backup');
-      
-      const blob = await response.blob();
-      const url = window.URL.createObjectURL(blob);
+      const response = await api.get('/admin/backup', { responseType: 'blob' });
+      const url = window.URL.createObjectURL(response.data);
       const a = document.createElement('a');
       a.href = url;
       a.download = `backup_${new Date().toISOString().split('T')[0]}.json`;
