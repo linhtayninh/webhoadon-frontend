@@ -53,7 +53,7 @@ export default function Auth() {
     <div className="animate-fade-in" style={{ padding: '2rem' }}>
       <div className="text-center mb-4">
         <h1 style={{ fontSize: '1.5rem', color: 'var(--primary)', marginBottom: '0.5rem' }}>
-          Thuế Hộ Kinh Doanh
+          Sổ tay Cá nhân, Hộ kinh doanh
         </h1>
         <p style={{ color: 'var(--text-muted)' }}>3 Phút Mỗi Ngày, Cả Năm Không Lo Phạt</p>
       </div>
