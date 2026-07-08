@@ -18,7 +18,7 @@ export default function Auth() {
       localStorage.setItem('user', JSON.stringify(res.data.user));
       window.location.href = '/';
     } catch (error) {
-      alert('Lỗi đăng nhập Google');
+      alert('Lỗi: ' + (error.response?.data?.error || error.message || 'Lỗi đăng nhập Google'));
     }
   };
 
