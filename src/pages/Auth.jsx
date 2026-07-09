@@ -6,6 +6,7 @@ import { LogIn, UserPlus } from 'lucide-react';
 
 export default function Auth() {
   const [isLogin, setIsLogin] = useState(true);
+  const [isForgotPassword, setIsForgotPassword] = useState(false);
   const [formData, setFormData] = useState({
     email: '', password: '', taxCode: '', businessName: '', address: '', businessLocation: '', businessType: ''
   });
@@ -35,7 +36,16 @@ export default function Auth() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      if (isLogin) {
+      if (isForgotPassword) {
+        const res = await api.post('/auth/reset-password-mst', {
+          email: formData.email,
+          taxCode: formData.taxCode,
+          newPassword: formData.password
+        });
+        alert(res.data.message);
+        setIsForgotPassword(false);
+        setIsLogin(true);
+      } else if (isLogin) {
         const res = await api.post('/auth/login', { email: formData.email, password: formData.password });
         localStorage.setItem('token', res.data.token);
         localStorage.setItem('user', JSON.stringify(res.data.user));
@@ -64,18 +74,28 @@ export default function Auth() {
       </div>
 
       <div className="card">
-        <h2 className="mb-4 text-center">{isLogin ? 'Đăng Nhập' : 'Đăng Ký'}</h2>
+        <h2 className="mb-4 text-center">
+          {isForgotPassword ? 'Khôi Phục Mật Khẩu' : isLogin ? 'Đăng Nhập' : 'Đăng Ký'}
+        </h2>
         <form onSubmit={handleSubmit}>
           <div className="input-group">
             <label>Email</label>
             <input type="email" name="email" required onChange={handleChange} value={formData.email} />
           </div>
+
+          {isForgotPassword && (
+            <div className="input-group">
+              <label>Mã số thuế (Để xác minh)</label>
+              <input type="text" name="taxCode" required onChange={handleChange} value={formData.taxCode} />
+            </div>
+          )}
+
           <div className="input-group">
-            <label>Mật khẩu</label>
+            <label>{isForgotPassword ? 'Mật khẩu mới' : 'Mật khẩu'}</label>
             <input type="password" name="password" required onChange={handleChange} value={formData.password} />
           </div>
           
-          {!isLogin && (
+          {!isLogin && !isForgotPassword && (
             <>
               <div className="input-group">
                 <label>Tên Cá nhân/Hộ kinh doanh</label>
@@ -106,24 +126,49 @@ export default function Auth() {
             </>
           )}
 
+          {isLogin && !isForgotPassword && (
+            <div style={{ textAlign: 'right', marginBottom: '1rem' }}>
+              <button 
+                type="button" 
+                onClick={() => setIsForgotPassword(true)}
+                style={{ background: 'none', border: 'none', color: 'var(--primary)', cursor: 'pointer', fontSize: '0.875rem' }}
+              >
+                Quên mật khẩu?
+              </button>
+            </div>
+          )}
+
           <button type="submit" className="btn btn-primary mt-4">
-            {isLogin ? <><LogIn size={18} style={{ marginRight: '8px' }} /> Đăng Nhập</> : <><UserPlus size={18} style={{ marginRight: '8px' }} /> Đăng Ký</>}
+            {isForgotPassword ? 'Đổi Mật Khẩu Mới' : isLogin ? <><LogIn size={18} style={{ marginRight: '8px' }} /> Đăng Nhập</> : <><UserPlus size={18} style={{ marginRight: '8px' }} /> Đăng Ký</>}
           </button>
         </form>
 
-        <div className="mt-4" style={{ display: 'flex', justifyContent: 'center' }}>
-          <GoogleLogin
-            onSuccess={handleGoogleSuccess}
-            onError={handleGoogleError}
-            theme="outline"
-            size="large"
-            width="100%"
-          />
-        </div>
+        {!isForgotPassword && (
+          <div className="mt-4" style={{ display: 'flex', justifyContent: 'center' }}>
+            <GoogleLogin
+              onSuccess={handleGoogleSuccess}
+              onError={handleGoogleError}
+              theme="outline"
+              size="large"
+              width="100%"
+            />
+          </div>
+        )}
 
         <div className="text-center mt-4">
-          <button className="btn btn-secondary" onClick={() => setIsLogin(!isLogin)}>
-            {isLogin ? 'Chưa có tài khoản? Đăng ký ngay' : 'Đã có tài khoản? Đăng nhập'}
+          <button className="btn btn-secondary" onClick={() => {
+            if (isForgotPassword) {
+              setIsForgotPassword(false);
+              setIsLogin(true);
+            } else {
+              setIsLogin(!isLogin);
+            }
+          }}>
+            {isForgotPassword 
+              ? 'Quay lại Đăng nhập' 
+              : isLogin 
+                ? 'Chưa có tài khoản? Đăng ký ngay' 
+                : 'Đã có tài khoản? Đăng nhập'}
           </button>
         </div>
       </div>
