@@ -5,6 +5,7 @@ import TransactionForm from './pages/TransactionForm';
 import Report from './pages/Report';
 import Support from './pages/Support';
 import AdminDashboard from './pages/admin/AdminDashboard';
+import UpdateProfile from './pages/UpdateProfile';
 import './index.css';
 
 const PrivateRoute = ({ children }) => {
@@ -19,6 +20,7 @@ function App() {
         <div style={{ flex: 1 }}>
           <Routes>
             <Route path="/auth" element={<Auth />} />
+            <Route path="/update-profile" element={<UpdateProfile />} />
             <Route path="/" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
             <Route path="/add-transaction" element={<PrivateRoute><TransactionForm /></PrivateRoute>} />
             <Route path="/report" element={<PrivateRoute><Report /></PrivateRoute>} />

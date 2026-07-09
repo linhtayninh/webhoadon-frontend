@@ -14,9 +14,14 @@ export default function Auth() {
   const handleGoogleSuccess = async (credentialResponse) => {
     try {
       const res = await api.post('/auth/google', { credential: credentialResponse.credential });
-      localStorage.setItem('token', res.data.token);
-      localStorage.setItem('user', JSON.stringify(res.data.user));
-      window.location.href = '/';
+      
+      if (res.data.status === 'profile_incomplete') {
+        navigate('/update-profile', { state: { userId: res.data.userId } });
+      } else {
+        localStorage.setItem('token', res.data.token);
+        localStorage.setItem('user', JSON.stringify(res.data.user));
+        window.location.href = '/';
+      }
     } catch (error) {
       alert('Lỗi: ' + (error.response?.data?.error || error.message || 'Lỗi đăng nhập Google'));
     }
