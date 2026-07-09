@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import api from '../services/api';
-import { PlusCircle, FileText, LogOut, HelpCircle } from 'lucide-react';
+import { PlusCircle, FileText, LogOut, HelpCircle, Settings } from 'lucide-react';
 import { Doughnut } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 
@@ -123,12 +123,19 @@ export default function Dashboard() {
             <HelpCircle size={20} style={{ marginRight: '8px' }} />
             Hỗ trợ
           </Link>
-          {userRole === 'ADMIN' && (
+          <Link to="/settings" className="btn" style={{ flex: 1, textDecoration: 'none', background: 'var(--secondary)', color: 'white', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+            <Settings size={20} style={{ marginRight: '8px' }} />
+            Tài khoản
+          </Link>
+        </div>
+        
+        {userRole === 'ADMIN' && (
+          <div style={{ display: 'flex', gap: '1rem' }}>
             <Link to="/admin" className="btn" style={{ flex: 1, textDecoration: 'none', background: 'var(--danger)', color: 'white', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
               Trang Quản trị
             </Link>
-          )}
-        </div>
+          </div>
+        )}
       </div>
     </div>
   );

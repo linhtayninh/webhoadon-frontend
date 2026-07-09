@@ -10,6 +10,7 @@ const Report = lazy(() => import('./pages/Report'));
 const Support = lazy(() => import('./pages/Support'));
 const AdminDashboard = lazy(() => import('./pages/admin/AdminDashboard'));
 const UpdateProfile = lazy(() => import('./pages/UpdateProfile'));
+const Settings = lazy(() => import('./pages/Settings'));
 
 const PrivateRoute = ({ children }) => {
   const token = localStorage.getItem('token');
@@ -29,6 +30,7 @@ function App() {
               <Route path="/add-transaction" element={<PrivateRoute><TransactionForm /></PrivateRoute>} />
               <Route path="/report" element={<PrivateRoute><Report /></PrivateRoute>} />
               <Route path="/support" element={<PrivateRoute><Support /></PrivateRoute>} />
+              <Route path="/settings" element={<PrivateRoute><Settings /></PrivateRoute>} />
               <Route path="/admin" element={<PrivateRoute><AdminDashboard /></PrivateRoute>} />
             </Routes>
           </Suspense>
