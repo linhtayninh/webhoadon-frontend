@@ -2,24 +2,24 @@
 
 :root {
   /* Colors */
-  --primary: #2563eb;
-  --primary-hover: #1d4ed8;
+  --primary: #1856FF;
+  --primary-hover: #0f3dcc;
   --secondary: #10b981;
   --bg: #f8fafc;
-  --surface: #ffffff;
-  --text-main: #0f172a;
+  --surface: rgba(255, 255, 255, 0.45);
+  --text-main: #141414;
   --text-muted: #64748b;
-  --border: #e2e8f0;
-  --danger: #ef4444;
+  --border: rgba(255, 255, 255, 0.5);
+  --danger: #EA2143;
 
   /* Shadows */
   --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 8px 32px 0 rgba(31, 38, 135, 0.15); /* Glass shadow */
 
   /* Radius */
-  --radius-md: 0.5rem;
-  --radius-lg: 1rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1.5rem;
   --radius-full: 9999px;
 }
 
@@ -31,7 +31,8 @@
 
 body {
   font-family: 'Inter', sans-serif;
-  background-color: var(--bg);
+  background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%);
+  background-attachment: fixed;
   color: var(--text-main);
   -webkit-font-smoothing: antialiased;
 }
@@ -41,8 +42,7 @@ body {
   max-width: 480px;
   margin: 0 auto;
   min-height: 100vh;
-  background-color: var(--surface);
-  box-shadow: var(--shadow-lg);
+  background-color: transparent;
   display: flex;
   flex-direction: column;
 }
@@ -62,19 +62,24 @@ body {
 }
 
 .btn-primary {
-  background-color: var(--primary);
+  background: linear-gradient(135deg, var(--primary), var(--primary-hover));
   color: white;
+  box-shadow: 0 4px 15px rgba(24, 86, 255, 0.3);
 }
 
 .btn-primary:hover {
-  background-color: var(--primary-hover);
-  transform: translateY(-1px);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(24, 86, 255, 0.4);
 }
 
 .btn-secondary {
-  background-color: var(--surface);
+  background-color: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(4px);
   border: 1px solid var(--border);
   color: var(--text-main);
+}
+.btn-secondary:hover {
+  background-color: rgba(255, 255, 255, 0.7);
 }
 
 .input-group {
@@ -94,8 +99,9 @@ body {
   padding: 0.75rem;
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.6);
   font-size: 1rem;
-  transition: border-color 0.2s ease;
+  transition: all 0.2s ease;
 }
 
 .input-group input:focus, .input-group select:focus {
@@ -106,9 +112,11 @@ body {
 
 .card {
   background: var(--surface);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border-radius: var(--radius-lg);
-  padding: 1.5rem;
-  box-shadow: var(--shadow-sm);
+  padding: 2rem 1.5rem;
+  box-shadow: var(--shadow-lg);
   border: 1px solid var(--border);
 }
 

@@ -4,7 +4,7 @@ import api from '../services/api';
 
 export default function UpdateProfile() {
   const [formData, setFormData] = useState({
-    businessName: '', taxCode: '', address: '', businessLocation: '', businessType: ''
+    businessName: '', taxCode: '', address: '', businessLocation: '', businessType: '', password: ''
   });
   const navigate = useNavigate();
   const location = useLocation();
@@ -69,6 +69,14 @@ export default function UpdateProfile() {
               <option value="Sản xuất, vận tải, dịch vụ có gắn với hàng hóa">Sản xuất, vận tải, dịch vụ có gắn với hàng hóa</option>
               <option value="Hoạt động kinh doanh khác">Hoạt động kinh doanh khác</option>
             </select>
+          </div>
+          
+          <div className="input-group" style={{ marginTop: '1.5rem', borderTop: '1px solid var(--border)', paddingTop: '1rem' }}>
+            <label>Tạo Mật khẩu dự phòng (Không bắt buộc)</label>
+            <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '0.5rem' }}>
+              Nếu tạo mật khẩu, sau này bạn có thể đăng nhập bằng Mật khẩu thay vì dùng Google.
+            </p>
+            <input type="password" name="password" placeholder="Nhập mật khẩu (nếu muốn)" onChange={handleChange} value={formData.password} />
           </div>
 
           <button type="submit" className="btn btn-primary mt-4" style={{ width: '100%' }}>
