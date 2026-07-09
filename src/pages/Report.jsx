@@ -9,12 +9,10 @@ export default function Report() {
   const [isDownloading, setIsDownloading] = useState(false);
 
   const fetchReport = async () => {
-    const token = localStorage.getItem('token');
-    const response = await fetch(`http://localhost:3000/api/report/export-s1a?month=${month}&year=${year}`, {
-      headers: { 'Authorization': `Bearer ${token}` }
+    const response = await api.get(`/report/export-s1a?month=${month}&year=${year}`, {
+      responseType: 'blob'
     });
-    if (!response.ok) throw new Error('Không thể tải file');
-    return await response.blob();
+    return response.data;
   };
 
   const handleDownload = async () => {
