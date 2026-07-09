@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">LHO WebHoaDon</string>
+    <string name="title_activity_main">LHO WebHoaDon</string>
+    <string name="package_name">vn.lho.webhoadon</string>
+    <string name="custom_url_scheme">vn.lho.webhoadon</string>
+</resources>
