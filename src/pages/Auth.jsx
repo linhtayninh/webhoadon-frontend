@@ -7,6 +7,7 @@ import { LogIn, UserPlus } from 'lucide-react';
 export default function Auth() {
   const [isLogin, setIsLogin] = useState(true);
   const [isForgotPassword, setIsForgotPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     email: '', password: '', taxCode: '', businessName: '', address: '', businessLocation: '', businessType: ''
   });
@@ -35,6 +36,7 @@ export default function Auth() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     try {
       if (isForgotPassword) {
         const res = await api.post('/auth/reset-password-mst', {
@@ -57,6 +59,8 @@ export default function Auth() {
       }
     } catch (error) {
       alert(error.response?.data?.error || 'Có lỗi xảy ra');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -138,8 +142,14 @@ export default function Auth() {
             </div>
           )}
 
-          <button type="submit" className="btn btn-primary mt-4">
-            {isForgotPassword ? 'Đổi Mật Khẩu Mới' : isLogin ? <><LogIn size={18} style={{ marginRight: '8px' }} /> Đăng Nhập</> : <><UserPlus size={18} style={{ marginRight: '8px' }} /> Đăng Ký</>}
+          <button type="submit" className="btn btn-primary mt-4" disabled={isLoading}>
+            {isLoading 
+              ? 'Vui lòng chờ trong giây lát...' 
+              : isForgotPassword 
+                ? 'Đổi Mật Khẩu Mới' 
+                : isLogin 
+                  ? <><LogIn size={18} style={{ marginRight: '8px' }} /> Đăng Nhập</> 
+                  : <><UserPlus size={18} style={{ marginRight: '8px' }} /> Đăng Ký</>}
           </button>
         </form>
 
