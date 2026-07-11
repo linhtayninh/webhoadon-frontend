@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import api from '../services/api';
-import { PlusCircle, FileText, LogOut, HelpCircle, Settings } from 'lucide-react';
+import { PlusCircle, FileText, LogOut, HelpCircle, Settings, Search } from 'lucide-react';
 import { Doughnut } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 
@@ -123,9 +123,12 @@ export default function Dashboard() {
             <HelpCircle size={20} style={{ marginRight: '8px' }} />
             Hỗ trợ
           </Link>
-          <Link to="/settings" className="btn" style={{ flex: 1, textDecoration: 'none', background: 'var(--secondary)', color: 'white', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-            <Settings size={20} style={{ marginRight: '8px' }} />
-            Tài khoản
+          <Link to="/lookup" className="btn btn-primary" style={{ flex: 1, textDecoration: 'none' }}>
+            <Search size={20} style={{ marginRight: '8px' }} />
+            Tra cứu
+          </Link>
+          <Link to="/settings" className="btn btn-secondary" style={{ flex: 0.4, minWidth: '50px', padding: '0.75rem' }}>
+            <Settings size={20} />
           </Link>
         </div>
         

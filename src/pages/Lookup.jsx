@@ -11,29 +11,31 @@ export default function Lookup() {
   const handleLookup = (e) => {
     e.preventDefault();
     setLoading(true);
-    // Giả lập gọi API từ hệ thống Lạc Hồng (lho.vn)
+    // Giả lập tra cứu từ hệ thống Lạc Hồng (webhoadon.vn)
     setTimeout(() => {
       setResult({
-        invoiceNo: '0004567',
+        invoiceNo: '0008899',
         date: new Date().toLocaleDateString('vi-VN'),
-        buyer: 'Khách hàng LHO',
-        amount: 2500000,
-        status: 'Đã xác thực pháp lý'
+        seller: 'CÔNG TY CP GIẢI PHÁP CÔNG NGHỆ LẠC HỒNG',
+        amount: 5250000,
+        status: 'Hợp lệ - Đã ký số'
       });
       setLoading(false);
-    }, 1200);
+    }, 1500);
   };
 
   return (
-    <div className="animate-fade-in" style={{ padding: '1.5rem' }}>
+    <div className="animate-fade-in" style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
       <div className="flex items-center mb-6">
-        <Link to="/" style={{ color: 'var(--text-main)', marginRight: '1rem' }}><ArrowLeft /></Link>
-        <h2 style={{ fontSize: '1.25rem', fontWeight: 'bold' }}>Tra cứu hóa đơn LHO</h2>
+        <Link to="/" style={{ color: 'var(--text-main)', marginRight: '1rem' }}>
+          <ArrowLeft size={24} />
+        </Link>
+        <h2 style={{ fontSize: '1.25rem', fontWeight: 'bold' }}>Tra cứu Hóa đơn LHO</h2>
       </div>
 
-      <div className="card mb-6" style={{ background: '#fff', border: '1px solid #e0e0e0' }}>
+      <div className="card mb-6">
         <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginBottom: '1.5rem' }}>
-          Nhập thông tin hóa đơn từ lho.vn để kiểm tra tính hợp lệ và tải về bản gốc.
+          Nhập thông tin tra cứu từ hệ thống <strong>webhoadon.vn</strong> để kiểm tra dữ liệu gốc.
         </p>
         <form onSubmit={handleLookup}>
           <div className="input-group">
@@ -47,7 +49,7 @@ export default function Lookup() {
             />
           </div>
           <div className="input-group">
-            <label>Mã nhận hóa đơn</label>
+            <label>Mã tra cứu hóa đơn</label>
             <input
               type="text"
               value={lookupCode}
@@ -56,19 +58,19 @@ export default function Lookup() {
               required
             />
           </div>
-          <button type="submit" className="btn btn-primary" disabled={loading} style={{ background: '#0056b3' }}>
-            {loading ? 'Đang xác thực...' : (
-              <><Search size={20} style={{ marginRight: '8px' }} /> Kiểm tra hóa đơn</>
+          <button type="submit" className="btn btn-primary" disabled={loading}>
+            {loading ? 'Đang truy vấn...' : (
+              <><Search size={20} style={{ marginRight: '8px' }} /> Tra cứu ngay</>
             )}
           </button>
         </form>
       </div>
 
       {result && (
-        <div className="card animate-fade-in" style={{ border: '2px solid #28a745', background: '#f8fff9' }}>
-          <div className="flex items-center mb-4" style={{ color: '#28a745' }}>
+        <div className="card animate-fade-in" style={{ border: '2px solid var(--secondary)', background: 'rgba(16, 185, 129, 0.1)' }}>
+          <div className="flex items-center mb-4" style={{ color: 'var(--secondary)' }}>
             <ShieldCheck size={24} style={{ marginRight: '8px' }} />
-            <h3 style={{ fontSize: '1.1rem', fontWeight: 'bold' }}>Kết quả xác thực</h3>
+            <h3 style={{ fontSize: '1.1rem', fontWeight: 'bold' }}>Hóa đơn hợp lệ</h3>
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem', fontSize: '0.95rem' }}>
@@ -77,33 +79,29 @@ export default function Lookup() {
               <span style={{ fontWeight: '600' }}>{result.invoiceNo}</span>
             </div>
             <div className="flex justify-between">
-              <span style={{ color: 'var(--text-muted)' }}>Người mua:</span>
-              <span>{result.buyer}</span>
+              <span style={{ color: 'var(--text-muted)' }}>Người bán:</span>
+              <span style={{ textAlign: 'right', maxWidth: '60%' }}>{result.seller}</span>
             </div>
             <div className="flex justify-between">
               <span style={{ color: 'var(--text-muted)' }}>Tổng thanh toán:</span>
-              <span style={{ fontWeight: 'bold', color: '#0056b3' }}>{result.amount.toLocaleString('vi-VN')} đ</span>
-            </div>
-            <div className="flex justify-between">
-              <span style={{ color: 'var(--text-muted)' }}>Trạng thái:</span>
-              <span style={{ color: '#28a745', fontWeight: 'bold' }}>{result.status}</span>
+              <span style={{ fontWeight: 'bold', color: 'var(--primary)' }}>{result.amount.toLocaleString('vi-VN')} đ</span>
             </div>
           </div>
 
           <div style={{ marginTop: '1.5rem', display: 'flex', gap: '0.75rem' }}>
-            <button className="btn btn-secondary" style={{ flex: 1, fontSize: '0.85rem', borderColor: '#0056b3', color: '#0056b3' }}>
-              <Download size={16} style={{ marginRight: '6px' }} /> Bản PDF
+            <button className="btn btn-secondary" style={{ flex: 1, fontSize: '0.85rem' }}>
+              <Download size={16} style={{ marginRight: '6px' }} /> Tải PDF
             </button>
-            <button className="btn btn-secondary" style={{ flex: 1, fontSize: '0.85rem', borderColor: '#0056b3', color: '#0056b3' }}>
+            <button className="btn btn-secondary" style={{ flex: 1, fontSize: '0.85rem' }}>
               <FileText size={16} style={{ marginRight: '6px' }} /> Bản XML
             </button>
           </div>
         </div>
       )}
 
-      <div style={{ marginTop: '2.5rem', textAlign: 'center' }}>
-        <p style={{ color: 'var(--text-muted)', fontSize: '0.8rem', marginTop: '0.5rem' }}>
-          Dịch vụ Hóa đơn điện tử Lạc Hồng Online (lho.vn)
+      <div style={{ marginTop: 'auto', textAlign: 'center', padding: '2rem 0' }}>
+        <p style={{ color: 'var(--text-muted)', fontSize: '0.8rem' }}>
+          Giải pháp Hóa đơn điện tử Lạc Hồng Online
         </p>
       </div>
     </div>
