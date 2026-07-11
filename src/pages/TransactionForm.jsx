@@ -7,6 +7,7 @@ export default function TransactionForm() {
   const [formData, setFormData] = useState({ amount: '', description: '', date: new Date().toISOString().split('T')[0] });
   const [isScanning, setIsScanning] = useState(false);
   const [transactions, setTransactions] = useState([]);
+  const [suggestions, setSuggestions] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [editingId, setEditingId] = useState(null);
   const itemsPerPage = 5;
@@ -21,8 +22,18 @@ export default function TransactionForm() {
     }
   };
 
+  const fetchSuggestions = async () => {
+    try {
+      const res = await api.get('/transactions/descriptions');
+      setSuggestions(res.data);
+    } catch (error) {
+      console.error('Failed to fetch suggestions');
+    }
+  };
+
   useEffect(() => {
     fetchTransactions();
+    fetchSuggestions();
   }, []);
 
   const handleSubmit = async (e) => {
@@ -38,6 +49,7 @@ export default function TransactionForm() {
       setFormData(prev => ({ ...prev, amount: '', description: '' }));
       setEditingId(null);
       fetchTransactions();
+      fetchSuggestions();
       if (!editingId) setCurrentPage(1);
     } catch (error) {
       alert(editingId ? 'Lỗi cập nhật giao dịch' : 'Lỗi lưu giao dịch');
@@ -165,7 +177,14 @@ export default function TransactionForm() {
               onChange={e => setFormData({...formData, description: e.target.value})} 
               required 
               placeholder="Bán hàng..."
+              list="desc-suggestions"
+              autoComplete="off"
             />
+            <datalist id="desc-suggestions">
+              {suggestions.map((desc, idx) => (
+                <option key={idx} value={desc} />
+              ))}
+            </datalist>
           </div>
 
           <div className="input-group">
